@@ -1,0 +1,20 @@
+<header>
+  <nav>
+    <%= link_to "roodit", "#", class: "logo" %>
+
+    <div class="navlinks">
+      <%= link_to "new", "#" %>
+      <%= link_to "comments", "#" %>
+
+      <% unless logged_in? %>
+        <%= link_to "signup", new_user_path %>
+        <%= link_to "login", new_session_path %>
+      <% end %>
+
+      <% if logged_in? %>
+        <%= link_to "submit a link", "#" %>
+        <%= link_to "logout", sessions_path, method: :delete %>
+      <% end %>
+    </div>
+  </nav>
+</header>
