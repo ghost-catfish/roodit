@@ -23,3 +23,5 @@ Things you may want to cover:
 
 * ...
 # roodit
+
+# Roodit is modeled after a Reddit-style news aggregator website. Users can create new accounts, and submit links which can then be upvoted and downvoted by other registered users.

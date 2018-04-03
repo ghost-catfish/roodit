@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402192452) do
+ActiveRecord::Schema.define(version: 20180403163940) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.integer "user_id"
+    t.integer "link_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["link_id"], name: "index_comments_on_link_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "links", force: :cascade do |t|
     t.string "title"
@@ -19,6 +29,8 @@ ActiveRecord::Schema.define(version: 20180402192452) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points", default: 1
+    t.float "hot_score", default: 0.0
     t.index ["user_id"], name: "index_links_on_user_id"
   end
 
@@ -27,6 +39,17 @@ ActiveRecord::Schema.define(version: 20180402192452) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "link_id"
+    t.integer "upvote"
+    t.integer "downvote"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["link_id"], name: "index_votes_on_link_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end

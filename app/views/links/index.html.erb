@@ -1,0 +1,35 @@
+<section class="all-links">
+  <% @links.each do |link|  %>
+    <div class="link">
+      <div class="title">
+        <%= link_to link.title, (link.url? ? link.url : link) %>
+
+        <% if link.url? %>
+          <span>
+            ( <%= link.url %> )
+          </span>
+        <% end %>
+      </div>
+
+      <div class="metadata">
+        <span class="time-created">
+          <%= time_ago_in_words(link.created_at) %> ago
+        </span>
+        <span class="comment-count">
+        <%= link_to pluralize(link.comment_count, 'comment'), link %>
+       </span>
+        <% if logged_in? && current_user.owns_link?(link) %>
+        <span class="edit-link">
+        <%= link_to "edit", edit_link_path(link) %>
+        </span>
+
+        <span class="delete-link">
+         <%= link_to "delete", link, method: :delete, data: { confirm: "Are you sure?" } %>
+        </span>
+        <% end %>
+
+      </div>
+
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,32 @@
+<section class="edit-link">
+  <header>
+    <h1>
+      Edit link
+    </h1>
+  </header>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= render 'form' %>
+    </div>
+  </div>
+
+        <div class="form-group">
+          <%= f.text_field :title, required: true, class: "form-control", placeholder: "title" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.url_field :url, class: "form-control", placeholder: "url" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_area :description, class: "form-control", placeholder: "description", rows: 15 %>
+        </div>
+
+         <div class="form-group">
+          <%= f.button :submit, class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
