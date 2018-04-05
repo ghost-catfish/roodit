@@ -1,9 +1,10 @@
 
 class LinksController < ApplicationController
-  before_action :prevent_unauthorized_user_access, only: [:new, :edit]
+  before_action :prevent_unauthorized_user_access, except: [:show, :index]
 
   def index
   @links = Link.all 
+  @link = Link.hottest
   end
 
   def new
@@ -12,7 +13,6 @@ class LinksController < ApplicationController
 
   def create
   @link = current_user.links.new(link_params)
-
   if @link.save
     redirect_to root_path, notice: 'Link successfully created'
   else
@@ -44,10 +44,9 @@ class LinksController < ApplicationController
   else
     redirect_to root_path, notice: 'You are not authorized to edit this link.'
   end
-end
-end
+  end
 
-def update
+  def update
   @link = current_user.links.find_by(id: params[:id])
 
   if @link.update(link_params)
@@ -55,6 +54,42 @@ def update
   else
     render :edit
   end
+  end
+
+  def upvote
+  link = Link.find_by(id: params[:id])
+
+  if current_user.upvoted?(link)
+    current_user.remove_vote(link)
+  elsif current_user.downvoted?(link)
+    current_user.remove_vote(link)
+    current_user.upvote(link)
+  else
+    current_user.upvote(link)
+end
+
+  link.calc_hot_score
+  redirect_to root_path
+end
+
+def downvote
+  link = Link.find_by(id: params[:id])
+
+  if current_user.downvoted?(link)
+    current_user.remove_vote(link)
+  elsif current_user.upvoted?(link)
+    current_user.remove_vote(link)
+    current_user.downvote(link)
+  else
+    current_user.downvote(link)
+  end
+
+  link.calc_hot_score
+  redirect_to root_path
+end
+
+def newest
+  @links = Link.newest
 end
 
 private
@@ -63,4 +98,5 @@ def link_params
   params.require(:link).permit(:title, :url, :description)
 end
 
+end
 

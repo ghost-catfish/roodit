@@ -17,3 +17,23 @@ ul {
 .link {
   margin: 12px auto;
 }
+
+.metadata {
+  span {
+    margin: 0 4px;
+    border-right: 2px solid #777;
+    
+    &:first-child {
+      margin: 0;
+    }
+    
+    &:last-child {
+      border: 0;
+    }
+  }
+}
+
+.comment {
+  margin: 12px auto;
+  border-bottom: 2px solid #f5f5f5;
+}

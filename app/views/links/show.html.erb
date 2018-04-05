@@ -1,15 +1,13 @@
 <section class="link-thread">
   <header>
-    <h4>
-      <%= @link.title %>
-    </h4>
-
+    <%= render @link %>
     <% if @link.description? %>
       <p>
         <%= @link.description %>
       </p>
     <% end %>
   </header>
+  
   <% if logged_in? %>
     <div class="add-comment row">
       <div class="col-sm-6">

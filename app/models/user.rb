@@ -17,6 +17,34 @@ class User < ApplicationRecord
 
   def owns_comment?(comment)
   self == comment.user
-end
+  end
+
+  def upvote
+    link = Link.find_by(id: params[:id])
+
+    if current_user.upvoted?(link)
+      current_user.remove_vote(link)
+    else
+      current_user.upvote(link)
+    end
+
+    redirect_to root_path
+  end
+
+  def upvoted?(link)
+  votes.exists?(upvote: 1, link: link)
+  end
+
+  def remove_vote(link)
+  votes.find_by(link: link).destroy
+  end
+
+  def downvote(link)
+  votes.create(downvote: 1, link: link)
+  end
+
+  def downvoted?(link)
+  votes.exists?(downvote: 1, link: link)
+  end
 
 end
